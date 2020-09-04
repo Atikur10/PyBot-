@@ -22,9 +22,12 @@ async def on_ready():
 async def on_member_join(member):
     await member.create_dm()
     await member.dm_channel.send(
-        f'Hi {member.name}, welcome to {GUILD} !\n'
-        f'Kindly Introduce Yourself!'
+        f'Hi {member.name}, welcome to ECE23!\n'
+        f'"Kindly Introduce Yourself!"'
     )
+    channel = discord.utils.get(member.guild.text_channels, name="general")
+    await channel.send(f'Welcome to the server {member.mention}! \n'
+    f'Kindly Introduce Yourself here! ')
 
 @client.event
 async def on_message(message):
