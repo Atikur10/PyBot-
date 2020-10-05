@@ -1,16 +1,20 @@
 import os#imports library for os
 import discord #imports library for dicord.py
 from discord import file
-
+from discord.ext import commands,tasks 
+from random import choice
 
 TOKEN={your_bot_token}
 GUILD={your_guild_name}
+
+status = ['Enter your own custom status here'] #To show custom status
 
 #main loop
 client=discord.Client()
 
 @client.event #
 async def on_ready():
+    change_status.start()
     for guild in client.guilds:
         if guild.name == GUILD:
             break
@@ -72,7 +76,11 @@ async def on_message(message):
         )
     elif str(str(message.content)[3:]) in imgDir:
             await message.channel.send( file=discord.File("./images/"+str(str(message.content)[3:])+".jpg"))
-            
+
+  @tasks.loop(seconds = 20) # To loop custom status every 20 seconds you can set your custom time
+    async def change_status():
+        await client.change_presence(activity=discord.Game(choice(status)))
+                      
     
     
     
